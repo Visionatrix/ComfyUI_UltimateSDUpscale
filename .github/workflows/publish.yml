@@ -15,10 +15,9 @@ jobs:
 
       - name: Include submodule files
         run: |
-          # Remove submodule metadata
-          git submodule deinit -f repositories/ultimate_sd_upscale
+          # Remove submodule metadata carefully without deleting files
           git rm --cached repositories/ultimate_sd_upscale
-          rm -rf .git/modules/repositories/ultimate_sd_upscale
+          rm -rf repositories/ultimate_sd_upscale/.git
           # Re-add files as regular
           git add repositories/ultimate_sd_upscale
   
