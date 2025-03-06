@@ -18,7 +18,9 @@ jobs:
           # Remove the submodule's .git folder so it becomes a normal directory
           rm -rf repositories/ultimate_sd_upscale/.git
           # Add the now "regular" folder to the index
-          git add repositories/ultimate_sd_upscale          
+          git add repositories/ultimate_sd_upscale       
+          # commit the changes so that the files become tracked
+          git commit -m "Include submodule files for publish" || true
 
       - name: Listing Git Files
         run: |
