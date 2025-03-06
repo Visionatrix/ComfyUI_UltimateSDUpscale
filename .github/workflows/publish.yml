@@ -20,6 +20,8 @@ jobs:
           # Add the now "regular" folder to the index
           git add repositories/ultimate_sd_upscale       
           # commit the changes so that the files become tracked
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
           git commit -m "Include submodule files for publish" || true
 
       - name: Listing Git Files
