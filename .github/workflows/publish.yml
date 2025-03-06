@@ -1,11 +1,7 @@
 name: Publish to Comfy registry
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - "pyproject.toml"
+  pull_request:
 
 jobs:
   publish-node:
@@ -16,8 +12,21 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-      - name: Publish Custom Node
-        uses: Comfy-Org/publish-node-action@main
-        with:
-          ## Add your own personal access token to your Github Repository secrets and reference it here.
-          personal_access_token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+
+      - name: Include submodule files
+        run: |
+          # Remove submodule metadata carefully without deleting files
+          git rm --cached repositories/ultimate_sd_upscale
+          rm -rf repositories/ultimate_sd_upscale/.git
+          # Re-add files as regular
+          git add repositories/ultimate_sd_upscale
+  
+          ls -la repositories/ultimate_sd_upscale     
+          # commit the changes so that the files become tracked
+          # git config --global user.email "action@github.com"
+          # git config --global user.name "GitHub Action"
+          # git commit -m "Include submodule files for publish" || true
+
+      - name: Listing Git Files
+        run: |
+          git ls-files     
