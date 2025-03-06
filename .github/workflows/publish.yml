@@ -15,15 +15,18 @@ jobs:
 
       - name: Include submodule files
         run: |
-          # Remove the submodule's .git folder so it becomes a normal directory
-          rm -rf repositories/ultimate_sd_upscale/.git
-          # Add the now "regular" folder to the index
-          git add repositories/ultimate_sd_upscale       
+          # Remove submodule metadata
+          git submodule deinit -f repositories/ultimate_sd_upscale
+          git rm --cached repositories/ultimate_sd_upscale
+          rm -rf .git/modules/repositories/ultimate_sd_upscale
+          # Re-add files as regular
+          git add repositories/ultimate_sd_upscale
+  
           ls -la repositories/ultimate_sd_upscale     
           # commit the changes so that the files become tracked
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git commit -m "Include submodule files for publish" || true
+          # git config --global user.email "action@github.com"
+          # git config --global user.name "GitHub Action"
+          # git commit -m "Include submodule files for publish" || true
 
       - name: Listing Git Files
         run: |
